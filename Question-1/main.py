@@ -1,3 +1,4 @@
+
 import requests
 import json
 import logging
@@ -5,8 +6,8 @@ import time
 
 def get_numbers(urls, timeout=5):
   """Gets the numbers from the specified URLs."""
-  #  function takes a list of URLs as input and returns a list of numbers.
-  #  function makes a request to each URL and parses the response as JSON.
+  # This function takes a list of URLs as input and returns a list of numbers.
+  # The function makes a request to each URL and parses the response as JSON.
   # The numbers in the JSON response are then added to the list of numbers.
   # The timeout parameter specifies the maximum amount of time to wait for each request.
 
@@ -18,6 +19,9 @@ def get_numbers(urls, timeout=5):
     if response.status_code == 200:
       data = json.loads(response.content)
       numbers.extend(data["numbers"])
+      numbers = sorted(set(numbers))
+    else:
+      logging.info("Ignoring URL: %s", url)
     logging.info("Request: %s, Response: %s, Response Time: %s", url, response, response_time)
 
   return numbers
